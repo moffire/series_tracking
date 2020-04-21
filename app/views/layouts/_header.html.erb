@@ -4,6 +4,10 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
+          <!-- Search form -->
+          <input class="form-control" type="text" placeholder="" aria-label="Search">
+        </li>
+        <li class="nav-item">
           <%= link_to "Сейчас смотрят", '#', class: 'nav-link' %>
         </li>
         <% if user_signed_in? %>
