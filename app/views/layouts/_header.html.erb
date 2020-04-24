@@ -5,7 +5,12 @@
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <!-- Search form -->
-          <input class="form-control" type="text" placeholder="Поиск" aria-label="Search">
+          <%= form_tag search_path, method: :get, class: 'form-inline' do %>
+            <div class="form-group mx-sm-3">
+              <%= text_field_tag :q, nil, class: 'form-control' %>
+            </div>
+            <%= submit_tag "Поиск", class: 'btn btn-primary' %>
+          <% end %>
         </li>
         <li class="nav-item">
           <%= link_to "Сейчас смотрят", '#', class: 'nav-link' %>
@@ -15,7 +20,7 @@
             <%= link_to "Мои подписки", '#', class: 'nav-link' %>
           </li>
           <li class="nav-item">
-            <%= link_to "Выход", destroy_user_session_path, method: :delete,class: 'nav-link' %>
+            <%= link_to "Выход", destroy_user_session_path, method: :delete, class: 'nav-link' %>
           </li>
         <% else %>
           <li class="nav-item">

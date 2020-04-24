@@ -74,7 +74,7 @@ class MyShows
   def top_rated
     top_rated_list = {}
     html = parse_html
-    html.css('.landing > .container > .row> .col3 > a')[1..8].each do |movie|
+    html.css('.landing > .container > .row> .col3 > a')[1...8].each do |movie|
       movie_id = movie['href'][/\d+/]
       top_rated_list[:"#{movie_id}"] = {
           movie_ru_title: movie.css('.fsHeader').text,
@@ -88,5 +88,3 @@ class MyShows
     logger.error "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
   end
 end
-
-puts MyShows.new.top_rated
