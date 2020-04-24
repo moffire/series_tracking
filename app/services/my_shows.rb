@@ -28,11 +28,10 @@ class MyShows
     html = parse_html("/search/?q=#{encoded_query}")
     all_series = html.css('table.catalogTable').search('tr')
     all_series[1...-1].each do |movie|
-      ru_title = movie.css('td > a')[0].text
-      content[:"#{ru_title}"] = {
+      movie_id = movie.css('td > a')[0]['href'][/\d+/]
+      content[:"#{movie_id}"] = {
         en_title: movie.css('td > .catalogTableSubHeader')[0].text,
-        link: movie.css('td > a')[0]['href'],
-        movie_id: movie.css('td > a')[0]['href'][/\d+/],
+        ru_title: movie.css('td > a')[0].text,
         watchers: movie.css('td')[2].text,
         seasons: movie.css('td')[4].text,
         year: movie.css('td')[5].text

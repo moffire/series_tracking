@@ -1,5 +1,6 @@
 class SearchController < ApplicationController
   def movies
-    @movies = params[:q]
+    query = params[:q]
+    @movies = MyShows.new(query).movies_list
   end
 end
