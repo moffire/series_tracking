@@ -1,1 +1,26 @@
-<%= @movies %>
+<div class="container">
+  <div class="col-md-12">
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">Название(ru)</th>
+        <th scope="col">Название(en)</th>
+        <th scope="col">Смотрящих</th>
+        <th scope="col">Сезонов</th>
+        <th scope="col">Год</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @movies.each_pair do |movie_id, movie_info| %>
+        <tr>
+          <td><%= movie_info[:ru_title] %></td>
+          <td><%= movie_info[:en_title] %></td>
+          <td><%= movie_info[:watchers] %></td>
+          <td><%= movie_info[:seasons] %></td>
+          <td><%= movie_info[:year] %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
