@@ -1,6 +1,4 @@
-require 'nokogiri'
 require 'open-uri'
-require 'cgi/util'
 
 class MyShows
 
@@ -9,13 +7,14 @@ class MyShows
   attr_accessor :query
 
   def initialize(query = nil)
+    @logger = Logger.new(STDOUT)
     @query = query
   end
 
   def parse_html(url = '')
     Nokogiri::HTML(URI.open(BASE_URL + url))
   rescue StandardError
-    logger.error 'Error 404. Page not found.'
+    @logger.debug 'Error 404. Page not found.'
     nil
   end
 
@@ -39,7 +38,7 @@ class MyShows
     end
     content
   rescue NoMethodError
-    logger.error "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
+    @logger.debug "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
   end
 
   def movie_info(movie_id)
@@ -70,7 +69,7 @@ class MyShows
     end
     info_list
   rescue NoMethodError
-    logger.error "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
+    @logger.debug "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
   end
 
   # top rated movies from main page
@@ -88,6 +87,6 @@ class MyShows
     end
     top_rated_list
   rescue NoMethodError
-    logger.error "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
+    @logger.debug "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
   end
 end
