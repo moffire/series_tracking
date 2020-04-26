@@ -42,29 +42,33 @@ class MyShows
     logger.error "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
   end
 
-  def seasons(movie_id)
-    seasons_list = {}
-
+  def movie_info(movie_id)
+    info_list = {}
     html = parse_html("/view/#{movie_id}/")
     # list of all seasons
     html.css('.col8 > form > .row[itemprop="season"]').reverse_each do |season|
-      season_number = season.css('.flat > a')[0].text
       special_series_counter = 1
 
       season.css('.widerCont > .infoList > li').reverse_each do |series|
-        series_number = series.css('._numb').text
-        if series_number.empty?
-          series_number = "#{special_series_counter} спец"
+        episode_number = series.css('._numb').text
+        if episode_number.empty?
+          episode_number = "#{special_series_counter} (special)"
           special_series_counter += 1
         end
 
-        seasons_list["#{season_number}, #{series_number} серия"] = {
-          series_name: series.css('._name').text,
-          series_date: series.css('._date').text
+        season_number = season.css('.flat > a')[0].text.split(' ')[0]
+
+        info_list[:"#{movie_id}_#{season_number}_#{episode_number}"] = {
+          movie_image: html.css('.presentBlock > .presentBlockImg').to_s[/(?<=\().+?(?=\))/],
+          description: html.css('main > .row > .col5 > p').text.gsub(' ', ''),
+          season_number: season_number,
+          episode_number: episode_number,
+          episode_title: series.css('._name').text,
+          episode_date: series.css('._date').text
         }
       end
     end
-    seasons_list
+    info_list
   rescue NoMethodError
     logger.error "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
   end
@@ -76,10 +80,10 @@ class MyShows
     html.css('.landing > .container > .row> .col3 > a')[1...8].each do |movie|
       movie_id = movie['href'][/\d+/]
       top_rated_list[:"#{movie_id}"] = {
-          movie_ru_title: movie.css('.fsHeader').text,
-          movie_en_title: movie.css('.cFadeLight').text,
-          movie_image_link: movie.search('._img').to_s[/(?<=\().+?(?=\))/],
-          movie_page_link: movie['href']
+        movie_ru_title: movie.css('.fsHeader').text,
+        movie_en_title: movie.css('.cFadeLight').text,
+        movie_image_link: movie.search('._img').to_s[/(?<=\().+?(?=\))/],
+        movie_page_link: movie['href']
       }
     end
     top_rated_list
