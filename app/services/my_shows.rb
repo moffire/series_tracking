@@ -1,4 +1,6 @@
+require 'nokogiri'
 require 'open-uri'
+require 'cgi/util'
 
 class MyShows
 
@@ -7,14 +9,14 @@ class MyShows
   attr_accessor :query
 
   def initialize(query = nil)
-    @logger = Logger.new(STDOUT)
+    # @logger = Logger.new(STDOUT)
     @query = query
   end
 
   def parse_html(url = '')
     Nokogiri::HTML(URI.open(BASE_URL + url))
   rescue StandardError
-    @logger.debug 'Error 404. Page not found.'
+    logger.debug 'Error 404. Page not found.'
     nil
   end
 
@@ -38,7 +40,7 @@ class MyShows
     end
     content
   rescue NoMethodError
-    @logger.debug "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
+    logger.debug "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
   end
 
   def movie_info(movie_id)
@@ -58,8 +60,6 @@ class MyShows
         season_number = season.css('.flat > a')[0].text.split(' ')[0]
 
         info_list[:"#{movie_id}_#{season_number}_#{episode_number}"] = {
-          movie_image: html.css('.presentBlock > .presentBlockImg').to_s[/(?<=\().+?(?=\))/],
-          description: html.css('main > .row > .col5 > p').text.gsub(' ', ''),
           season_number: season_number,
           episode_number: episode_number,
           episode_title: series.css('._name').text,
@@ -67,9 +67,13 @@ class MyShows
         }
       end
     end
+    info_list[:movie_ru_title] = html.css('.container > .row > .col8 > h1').text
+    info_list[:movie_en_title] = html.css('.container > .row > .col8 > .subHeader').text
+    info_list[:movie_image] = html.css('.presentBlock > .presentBlockImg').to_s[/(?<=\().+?(?=\))/]
+    info_list[:description] = html.css('main > .row > .col5 > p').text.gsub(' ', '')
     info_list
   rescue NoMethodError
-    @logger.debug "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
+    logger.debug "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
   end
 
   # top rated movies from main page
@@ -87,6 +91,6 @@ class MyShows
     end
     top_rated_list
   rescue NoMethodError
-    @logger.debug "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
+    logger.debug "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
   end
 end
