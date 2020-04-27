@@ -43,9 +43,26 @@ class MyShows
     logger.debug "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
   end
 
-  def movie_info(movie_id)
-    info_list = {}
-    html = parse_html("/view/#{movie_id}/")
+  def movie_info
+    html = parse_html("/view/#{@query}/")
+    movie_full_info = {
+      movie_ru_title: html.css('.container > .row > .col8 > h1').text,
+      movie_en_title: html.css('.container > .row > .col8 > .subHeader').text,
+      movie_image: html.css('.presentBlock > .presentBlockImg').to_s[/(?<=\().+?(?=\))/],
+      description: html.css('main > .row > .col5 > p').text.gsub(' ', ''),
+      start_date: html.css('.clear > p')[0].text[/\d+\s+[а-яА-Я]+\s+\d+/],
+      country: html.css('.clear > p')[1].text.split[1],
+      imdb: html.css('.clear > p')[7].text[/\d.\d+\s[а-я]+\s\d+/],
+      kinopoisk: html.css('.clear > p')[8].text[/\d.\d+\s[а-я]+\s\d+/]
+    }
+    movie_full_info
+  rescue NoMethodError
+    logger.debug "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
+  end
+
+  def episodes_list
+    episodes_info = {}
+    html = parse_html("/view/#{@query}/")
     # list of all seasons
     html.css('.col8 > form > .row[itemprop="season"]').reverse_each do |season|
       special_series_counter = 1
@@ -56,10 +73,8 @@ class MyShows
           episode_number = "#{special_series_counter} (special)"
           special_series_counter += 1
         end
-
         season_number = season.css('.flat > a')[0].text.split(' ')[0]
-
-        info_list[:"#{movie_id}_#{season_number}_#{episode_number}"] = {
+        episodes_info[:"#{season_number}_#{episode_number}"] = {
           season_number: season_number,
           episode_number: episode_number,
           episode_title: series.css('._name').text,
@@ -67,11 +82,7 @@ class MyShows
         }
       end
     end
-    info_list[:movie_ru_title] = html.css('.container > .row > .col8 > h1').text
-    info_list[:movie_en_title] = html.css('.container > .row > .col8 > .subHeader').text
-    info_list[:movie_image] = html.css('.presentBlock > .presentBlockImg').to_s[/(?<=\().+?(?=\))/]
-    info_list[:description] = html.css('main > .row > .col5 > p').text.gsub(' ', '')
-    info_list
+    episodes_info
   rescue NoMethodError
     logger.debug "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
   end
