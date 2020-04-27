@@ -1,0 +1,25 @@
+<div class="container">
+  <%= render 'layouts/movie_info' %>
+  <div class="episodes">
+    <table class="table table-sm table-striped">
+      <thead>
+      <tr>
+        <th scope="col">Сезон</th>
+        <th scope="col">Серия</th>
+        <th scope="col">Название</th>
+        <th scope="col">Дата выхода</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @episodes.each_pair do |id, episode| %>
+        <tr>
+          <td><%= episode[:season_number] %></td>
+          <td><%= episode[:episode_number] %></td>
+          <td><%= episode[:episode_title] %></td>
+          <td><%= episode[:episode_date] %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

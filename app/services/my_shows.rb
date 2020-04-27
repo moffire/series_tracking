@@ -74,7 +74,7 @@ class MyShows
           special_series_counter += 1
         end
         season_number = season.css('.flat > a')[0].text.split(' ')[0]
-        episodes_info[:"#{season_number}_#{episode_number}"] = {
+        episodes_info[:"#{season_number} #{episode_number}"] = {
           season_number: season_number,
           episode_number: episode_number,
           episode_title: series.css('._name').text,
