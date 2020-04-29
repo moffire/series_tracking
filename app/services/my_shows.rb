@@ -60,29 +60,29 @@ class MyShows
     logger.debug "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
   end
 
-  def episodes_list
-    episodes_info = {}
+  def seasons_list
+    seasons = {}
     html = parse_html("/view/#{@query}/")
     # list of all seasons
     html.css('.col8 > form > .row[itemprop="season"]').reverse_each do |season|
-      special_series_counter = 1
+      season_number = season.css('.flat > a')[0].text.split(' ')[0]
 
+      seasons[season_number] = {}
+      # list of all episodes
       season.css('.widerCont > .infoList > li').reverse_each do |series|
+        special_series_counter = 0
         episode_number = series.css('._numb').text
         if episode_number.empty?
-          episode_number = "#{special_series_counter} (special)"
           special_series_counter += 1
+          episode_number = "#{'%02i' % special_series_counter}(special)"
         end
-        season_number = season.css('.flat > a')[0].text.split(' ')[0]
-        episodes_info[:"#{season_number} #{episode_number}"] = {
-          season_number: season_number,
-          episode_number: episode_number,
-          episode_title: series.css('._name').text,
-          episode_date: series.css('._date').text
-        }
+
+        episode_info = { episode_title: series.css('._name').text,
+                         episode_date: series.css('._date').text }
+        seasons[season_number].store("#{episode_number}", episode_info)
       end
     end
-    episodes_info
+    seasons
   rescue NoMethodError
     logger.debug "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
   end
@@ -105,3 +105,5 @@ class MyShows
     logger.debug "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
   end
 end
+
+puts MyShows.new(7718).seasons_list
