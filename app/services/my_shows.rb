@@ -74,7 +74,7 @@ class MyShows
         episode_number = series.css('._numb').text
         if episode_number.empty?
           special_series_counter += 1
-          episode_number = "#{'%02i' % special_series_counter}(special)"
+          episode_number = "#{'%02i' % special_series_counter} (special)"
         end
 
         episode_info = { episode_title: series.css('._name').text,
@@ -105,5 +105,3 @@ class MyShows
     logger.debug "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
   end
 end
-
-puts MyShows.new(7718).seasons_list
