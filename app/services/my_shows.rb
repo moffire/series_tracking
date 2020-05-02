@@ -43,6 +43,23 @@ class MyShows
     logger.debug "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
   end
 
+  def get_ratings(movie_id)
+    html = parse_html("/view/#{movie_id}/")
+    rating = {}
+    path = html.css('.clear > p')
+    rating[:imdb] = if path.text.include?('Рейтинг IMDB')
+                      path[7].text[/\d.\d+\s[а-я]+\s\d+/]
+                    else
+                      0
+                    end
+    rating[:kinopoisk] = if path.text.include?('Рейтинг Кинопоиска')
+                           path[8].text[/\d.\d+\s[а-я]+\s\d+/]
+                         else
+                           0
+                         end
+    rating
+  end
+
   def movie_info
     html = parse_html("/view/#{@query}/")
     movie_full_info = {
@@ -51,11 +68,9 @@ class MyShows
       movie_image: html.css('.presentBlock > .presentBlockImg').to_s[/(?<=\().+?(?=\))/],
       description: html.css('main > .row > .col5 > p').text.gsub(' ', ''),
       start_date: html.css('.clear > p')[0].text[/\d+\s+[а-яА-Я]+\s+\d+/],
-      country: html.css('.clear > p')[1].text.split[1],
-      imdb: html.css('.clear > p')[7].text[/\d.\d+\s[а-я]+\s\d+/],
-      kinopoisk: html.css('.clear > p')[8].text[/\d.\d+\s[а-я]+\s\d+/]
+      country: html.css('.clear > p')[1].text.split[1]
     }
-    movie_full_info
+    movie_full_info.merge(get_ratings(query))
   rescue NoMethodError
     logger.debug "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
   end
@@ -104,4 +119,7 @@ class MyShows
   rescue NoMethodError
     logger.debug "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
   end
+
 end
+
+MyShows.new.get_ratings(7718)
