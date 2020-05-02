@@ -30,8 +30,8 @@ ActiveRecord::Schema.define(version: 2020_05_02_105018) do
     t.text "description"
     t.date "start_date"
     t.string "country"
-    t.float "imdb", default: 0.0
-    t.float "kinopoisk", default: 0.0
+    t.float "imdb"
+    t.float "kinopoisk"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
