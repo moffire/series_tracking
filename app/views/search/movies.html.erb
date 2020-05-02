@@ -13,8 +13,8 @@
       <tbody>
       <% @movies.each_pair do |movie_id, movie_info| %>
         <tr>
-          <td><%= movie_info[:ru_title] %></td>
-          <td><%= movie_info[:en_title] %></td>
+          <td><%= link_to movie_info[:ru_title], movie_info_path(movie_id) %></td>
+          <td><%= link_to movie_info[:en_title], movie_info_path(movie_id) %></td>
           <td><%= movie_info[:watchers] %></td>
           <td><%= movie_info[:seasons] %></td>
           <td><%= movie_info[:year] %></td>

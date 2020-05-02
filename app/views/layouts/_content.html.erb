@@ -8,16 +8,12 @@
             <h6 class="card-title"><%= movie_info[:movie_ru_title] %></h6>
             <h7 class="card-subtitle mb-2 text-muted"><%= movie_info[:movie_en_title] %></h7>
           </div>
-          <% if user_signed_in? %>
-            <div class="card-footer text-left">
-              <%= link_to 'Подробнее', movie_info_path(movie_id), class: "btn btn-primary" %>
+          <div class="card-footer text-left">
+            <%= link_to 'Подробнее', movie_info_path(movie_id), class: "btn btn-primary" %>
+            <% if user_signed_in? %>
               <a href="#" class="btn btn-success">+</a>
-            </div>
-          <% else %>
-            <div class="card-footer text-left">
-              <a href="#" class="btn btn-primary">Подробнее</a>
-            </div>
-          <% end %>
+            <% end %>
+          </div>
         </div>
       </div>
     <% end %>
