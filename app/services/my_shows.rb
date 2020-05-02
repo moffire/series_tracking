@@ -48,12 +48,12 @@ class MyShows
     rating = {}
     path = html.css('.clear > p')
     rating[:imdb] = if path.text.include?('Рейтинг IMDB')
-                      path[7].text[/(\d|\d.\d+)\s[а-я]+\s\d+/]
+                      path[7].text[/(\d.\d+|\d)/]
                     else
                       0
                     end
     rating[:kinopoisk] = if path.text.include?('Рейтинг Кинопоиска')
-                           path[8].text[/(\d|\d.\d+)\s[а-я]+\s\d+/]
+                           path[8].text[/(\d.\d+|\d)/]
                          else
                            0
                          end
