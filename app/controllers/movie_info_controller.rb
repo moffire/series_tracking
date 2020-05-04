@@ -1,7 +1,8 @@
 class MovieInfoController < ApplicationController
 
   def index
-    @movie = movie.movie_info
+    # @movie = movie.movie_info
+    # @movie = Movie.find_by()
     @seasons = movie.seasons_list
   end
 

@@ -63,6 +63,7 @@ class MyShows
   def movie_info
     html = parse_html("/view/#{@query}/")
     movie_full_info = {
+      movie_outer_id: html.css('.metaList > .last > a')[0]['href'][/\d+/],
       movie_ru_title: html.css('.container > .row > .col8 > h1').text,
       movie_en_title: html.css('.container > .row > .col8 > .subHeader').text,
       movie_image: html.css('.presentBlock > .presentBlockImg').to_s[/(?<=\().+?(?=\))/],
@@ -121,3 +122,5 @@ class MyShows
   end
 
 end
+
+MyShows.new(33040).movie_info
