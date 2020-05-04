@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_04_145508) do
+ActiveRecord::Schema.define(version: 2020_05_04_193201) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,9 +26,9 @@ ActiveRecord::Schema.define(version: 2020_05_04_145508) do
   create_table "movies", force: :cascade do |t|
     t.string "ru_title"
     t.string "en_title"
-    t.string "image_url"
-    t.text "description"
-    t.date "start_date"
+    t.string "image_url", default: "https://dummyimage.com/600x400/f5f5f5/000000&text=No+image+=("
+    t.text "description", default: "Описание недоступно"
+    t.string "start_date"
     t.string "country"
     t.float "imdb"
     t.float "kinopoisk"

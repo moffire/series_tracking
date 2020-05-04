@@ -15,7 +15,7 @@ class MyShows
   def parse_html(url = '')
     Nokogiri::HTML(URI.open(BASE_URL + url))
   rescue StandardError
-    logger.debug 'Error 404. Page not found.'
+    "Error 404. Page not found."
     nil
   end
 
