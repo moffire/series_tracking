@@ -9,7 +9,6 @@ class MyShows
   attr_accessor :query
 
   def initialize(query = nil)
-    # @logger = Logger.new(STDOUT)
     @query = query
   end
 
@@ -40,7 +39,7 @@ class MyShows
     end
     content
   rescue NoMethodError
-    logger.debug "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
+    "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
   end
 
   def get_ratings(movie_id)
@@ -73,7 +72,7 @@ class MyShows
     }
     movie_full_info.merge(get_ratings(query))
   rescue NoMethodError
-    logger.debug "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
+    "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
   end
 
   def seasons_list
@@ -100,7 +99,7 @@ class MyShows
     end
     seasons
   rescue NoMethodError
-    logger.debug "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
+    "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
   end
 
   # top rated movies from main page
@@ -118,7 +117,7 @@ class MyShows
     end
     top_rated_list
   rescue NoMethodError
-    logger.debug "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
+    "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
   end
 
 end
