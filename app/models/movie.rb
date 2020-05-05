@@ -3,20 +3,21 @@ class Movie < ApplicationRecord
   has_many :seasons
 
   before_validation do |record|
-    record.external_id = movie_attr[:external_id]
-    record.ru_title = movie_attr[:movie_ru_title]
-    record.en_title = movie_attr[:movie_en_title]
-    record.image_url ||= movie_attr[:movie_image]
-    record.description ||= movie_attr[:description]
-    record.start_date = movie_attr[:start_date]
-    record.country = movie_attr[:country]
-    record.imdb = movie_attr[:imdb]
-    record.kinopoisk = movie_attr[:kinopoisk]
+    data = movie_data
+    record.external_id = data[:external_id]
+    record.ru_title = data[:movie_ru_title]
+    record.en_title = data[:movie_en_title]
+    record.image_url ||= data[:movie_image]
+    record.description ||= data[:description]
+    record.start_date = data[:start_date]
+    record.country = data[:country]
+    record.imdb = data[:imdb]
+    record.kinopoisk = data[:kinopoisk]
   end
 
   private
 
-  def movie_attr
+  def movie_data
     MyShows.new(attributes['external_id']).movie_info
   end
 
