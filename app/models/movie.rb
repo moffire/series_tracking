@@ -1,6 +1,8 @@
 class Movie < ApplicationRecord
   validates :image_url, :description, :country, :start_date, :external_id, presence: true
-  has_many :seasons
+  belongs_to :user
+  has_many :seasons, dependent: :destroy
+  has_many :episodes, through: :seasons, dependent: :destroy
 
   before_validation do |record|
     data = movie_data
