@@ -71,13 +71,14 @@ class MyShows
       country: html.css('.clear > p')[1].text.split[1]
     }
     movie_full_info.merge(get_ratings(query))
+    movie_full_info.merge(seasons: seasons_list(query))
   rescue NoMethodError
     "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."
   end
 
-  def seasons_list
+  def seasons_list(movie_id)
     seasons = {}
-    html = parse_html("/view/#{@query}/")
+    html = parse_html("/view/#{movie_id}/")
     # list of all seasons
     html.css('.col8 > form > .row[itemprop="season"]').reverse_each do |season|
       season_number = season.css('.flat > a')[0].text.split(' ')[0]

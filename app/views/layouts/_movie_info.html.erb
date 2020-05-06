@@ -1,23 +1,23 @@
 <div class="row my-4">
   <div class="col-lg-12">
     <div class="col-lg-8">
-      <h4><%= @movie[:movie_ru_title] %></h4>
-      <h6><%= @movie[:movie_en_title] %></h6>
+      <h4><%= @movie.ru_title %></h4>
+      <h6><%= @movie.en_title %></h6>
     </div>
   </div>
   <div class="col-lg-8">
-    <%= image_tag @movie[:movie_image], class: 'img-fluid rounded' %>
+    <%= image_tag @movie.image_url, class: 'img-fluid rounded' %>
   </div>
   <div class="col-lg-4">
     <ul class="list-group">
-      <li class="list-group-item">Дата выхода <span class="badge badge-secondary float-right"><%= @movie[:start_date] %></span></li>
-      <li class="list-group-item">Страна производства <span class="badge badge-secondary float-right"><%= @movie[:country] %></span></li>
-      <li class="list-group-item">Рейтинг IMDB <span class="badge badge-secondary float-right"><%= @movie[:imdb] %> из 10</span></li>
-      <li class="list-group-item">Рейтинг Кинопоиск <span class="badge badge-secondary float-right"><%= @movie[:kinopoisk] %> из 10</span></li>
+      <li class="list-group-item">Дата выхода <span class="badge badge-secondary float-right"><%= @movie.start_date %></span></li>
+      <li class="list-group-item">Страна производства <span class="badge badge-secondary float-right"><%= @movie.country %></span></li>
+      <li class="list-group-item">Рейтинг IMDB <span class="badge badge-secondary float-right"><%= @movie.imdb %> из 10</span></li>
+      <li class="list-group-item">Рейтинг Кинопоиск <span class="badge badge-secondary float-right"><%= @movie.kinopoisk %> из 10</span></li>
     </ul>
   </div>
   <div class="col-lg-8">
-    <p><%= @movie[:description] %></p>
+    <p><%= @movie.description %></p>
     <a class="btn btn-primary btn-md" href="#">Подписаться\Отписаться</a>
   </div>
 </div>

@@ -12,17 +12,17 @@
       </tr>
       </thead>
       <tbody>
-      <% @seasons.each_pair do |season, episodes| %>
-        <% episodes.each_pair do |episode_number, episode_info| %>
-          <tr>
-            <td><%= season %></td>
-            <td><%= episode_number %></td>
-            <td><%= episode_info[:episode_title] %></td>
-            <td><%= episode_info[:episode_date] %></td>
-            <td class="text-center"><%= check_box_tag 'viewed' %></td>
-          </tr>
-        <% end %>
-      <% end %>
+      <%# @seasons.each_pair do |season, episodes| %>
+        <%# episodes.each_pair do |episode_number, episode_info| %>
+<!--          <tr>-->
+<!--            <td><%#= season %></td>-->
+<!--            <td><%#= episode_number %></td>-->
+<!--            <td><%#= episode_info[:episode_title] %></td>-->
+<!--            <td><%#= episode_info[:episode_date] %></td>-->
+<!--            <td class="text-center"><%#= check_box_tag 'viewed' %></td>-->
+<!--          </tr>-->
+        <%# end %>
+      <%# end %>
       </tbody>
     </table>
   </div>
