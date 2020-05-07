@@ -3,9 +3,10 @@ class Movie < ApplicationRecord
   has_many :seasons, dependent: :destroy
   has_many :episodes, through: :seasons, dependent: :destroy
 
-  before_validation do |movie|
-    data = movie_data
-    movie.external_id = data[:external_id]
+
+  def self.from_external_data(data)
+
+    movie = Movie.find_or_initialize_by(external_id: data[:external_id])
     movie.ru_title = data[:movie_ru_title]
     movie.en_title = data[:movie_en_title]
     movie.image_url = data[:movie_image]
@@ -14,11 +15,13 @@ class Movie < ApplicationRecord
     movie.country = data[:country]
     movie.imdb = data[:imdb]
     movie.kinopoisk = data[:kinopoisk]
-  end
 
-  private
+    return nil unless movie.save
 
-  def movie_data
-    MyShows.new(attributes['external_id']).movie_info
+    data[:seasons].keys.each do |season|
+      Season.from_external_data(movie.id, season, data[:seasons])
+    end
+
+    movie
   end
 end

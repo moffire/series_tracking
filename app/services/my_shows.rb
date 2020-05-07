@@ -47,12 +47,12 @@ class MyShows
     rating = {}
     path = html.css('.clear > p')
     rating[:imdb] = if path.text.include?('Рейтинг IMDB')
-                      path[7].text[/(\d.\d+|\d)/]
+                      path[7].text[/(\d.\d+|\d)/].to_f
                     else
                       0
                     end
     rating[:kinopoisk] = if path.text.include?('Рейтинг Кинопоиска')
-                           path[8].text[/(\d.\d+|\d)/]
+                           path[8].text[/(\d.\d+|\d)/].to_f
                          else
                            0
                          end
@@ -70,7 +70,7 @@ class MyShows
       start_date: html.css('.clear > p')[0].text[/\d+\s+[а-яА-Я]+\s+\d+/],
       country: html.css('.clear > p')[1].text.split[1]
     }
-    movie_full_info.merge(get_ratings(query))
+    movie_full_info.merge!(get_ratings(query))
     movie_full_info.merge(seasons: seasons_list(query))
   rescue NoMethodError
     "Can't apply selectors in '#{__method__}' method. DOM structure apparently was changed."

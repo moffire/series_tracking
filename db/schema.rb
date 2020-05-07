@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_05_172910) do
+ActiveRecord::Schema.define(version: 2020_05_05_151004) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_172910) do
   create_table "episodes", force: :cascade do |t|
     t.string "number"
     t.string "title"
-    t.date "date"
+    t.string "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "season_id"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_172910) do
   end
 
   create_table "movies", force: :cascade do |t|
+    t.integer "external_id"
     t.string "ru_title"
     t.string "en_title"
     t.string "image_url", default: "https://dummyimage.com/600x400/f5f5f5/000000&text=No+image+=("
@@ -36,7 +37,8 @@ ActiveRecord::Schema.define(version: 2020_05_05_172910) do
     t.float "kinopoisk"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "external_id"
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_movies_on_user_id"
   end
 
   create_table "seasons", force: :cascade do |t|
