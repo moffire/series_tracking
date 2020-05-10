@@ -8,21 +8,25 @@
         <th scope="col">Серия</th>
         <th scope="col">Название</th>
         <th scope="col">Дата выхода</th>
-        <th scope="col" class="text-center">Просмотрено</th>
+        <% if user_signed_in? %>
+          <th scope="col" class="text-center">Просмотрено</th>
+        <% end %>
       </tr>
       </thead>
       <tbody>
-      <%# @seasons.each_pair do |season, episodes| %>
-        <%# episodes.each_pair do |episode_number, episode_info| %>
-<!--          <tr>-->
-<!--            <td><%#= season %></td>-->
-<!--            <td><%#= episode_number %></td>-->
-<!--            <td><%#= episode_info[:episode_title] %></td>-->
-<!--            <td><%#= episode_info[:episode_date] %></td>-->
-<!--            <td class="text-center"><%#= check_box_tag 'viewed' %></td>-->
-<!--          </tr>-->
-        <%# end %>
-      <%# end %>
+      <% @movie.seasons.each do |season| %>
+        <% season.episodes.each do |episode| %>
+          <tr>
+            <td><%= season.number %></td>
+            <td><%= episode.number %></td>
+            <td><%= episode.title %></td>
+            <td><%= episode.date %></td>
+            <% if user_signed_in? %>
+              <td class="text-center"><%= check_box_tag 'viewed' %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      <% end %>
       </tbody>
     </table>
   </div>
