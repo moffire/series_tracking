@@ -44,18 +44,16 @@ class MyShows
 
   def get_ratings(movie_id)
     html = parse_html("/view/#{movie_id}/")
-    rating = {}
-    path = html.css('.clear > p')
-    rating[:imdb] = if path.text.include?('Рейтинг IMDB')
-                      path[7].text[/(\d.\d+|\d)/].to_f
-                    else
-                      0
-                    end
-    rating[:kinopoisk] = if path.text.include?('Рейтинг Кинопоиска')
-                           path[8].text[/(\d.\d+|\d)/].to_f
-                         else
-                           0
-                         end
+    rating = { kinopoisk: 0, imdb: 0 }
+    path = html.css('.clear > p > .cFade')
+    path.each do |row|
+      if row.text.include?('Рейтинг Кинопоиска')
+        rating[:kinopoisk] = row.parent.css('a').text.to_f
+      end
+      if row.text.include?('Рейтинг IMDB')
+        rating[:imdb] = row.parent.css('a').text.to_f
+      end
+    end
     rating
   end
 
