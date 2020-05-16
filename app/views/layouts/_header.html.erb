@@ -9,11 +9,14 @@
             <div class="form-group mx-sm-3">
               <%= text_field_tag :q, nil, class: 'form-control' %>
             </div>
-            <%= submit_tag "Поиск", class: 'btn btn-primary' %>
+            <%= submit_tag "Поиск", class: 'btn btn-outline-success my-2 my-sm-0' %>
           <% end %>
         </li>
         <li class="nav-item">
-          <%= link_to "Сейчас смотрят", '#', class: 'nav-link' %>
+          <%= link_to "Топ IMDB", top_imdb_path, class: 'nav-link' %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Топ Кинопоиск", top_kp_path, class: 'nav-link' %>
         </li>
         <% if user_signed_in? %>
           <li class="nav-item">
