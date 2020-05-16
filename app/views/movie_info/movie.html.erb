@@ -1,33 +1,40 @@
 <div class="container">
   <%= render 'layouts/movie_info' %>
-  <div class="episodes">
-    <table class="table table-sm table-striped">
-      <thead>
-      <tr>
-        <th scope="col">Сезон</th>
-        <th scope="col">Серия</th>
-        <th scope="col">Название</th>
-        <th scope="col">Дата выхода</th>
-        <% if user_signed_in? %>
-          <th scope="col" class="text-center">Просмотрено</th>
-        <% end %>
-      </tr>
-      </thead>
-      <tbody>
-      <% @movie.seasons.each do |season| %>
-        <% season.episodes.each do |episode| %>
+<!--  <div class="episodes">-->
+    <div class="row">
+      <table class="table table-light table-striped table-hover">
+        <% @movie.seasons.each do |season| %>
+          <tbody>
+          <tr class="clickable" data-toggle="collapse" data-target="#group-of-rows-<%= "#{season.number}" %>" aria-expanded="false" aria-controls="group-of-rows-<%= "#{season.number}" %>">
+            <td>Сезон <%= season.number %>
+              <span class="badge badge-primary float-right"><%= season.episodes.count %></span>
+            </td>
+          </tr>
+          </tbody>
+          <tbody id="group-of-rows-<%= "#{season.number}" %>" class="collapse">
           <tr>
-            <td><%= season.number %></td>
-            <td><%= episode.number %></td>
-            <td><%= episode.title %></td>
-            <td><%= episode.date %></td>
+            <th scope="col">Сезон</th>
+            <th scope="col">Серия</th>
+            <th scope="col">Название</th>
+            <th scope="col">Дата выхода</th>
             <% if user_signed_in? %>
-              <td class="text-center"><%= check_box_tag 'viewed' %></td>
+              <th scope="col" class="text-center">Просмотрено</th>
             <% end %>
           </tr>
+          <% season.episodes.each do |episode| %>
+            <tr>
+              <td><%= season.number %></td>
+              <td><%= episode.number %></td>
+              <td><%= episode.title %></td>
+              <td><%= episode.date %></td>
+              <% if user_signed_in? %>
+                <td class="text-center"><%= check_box_tag 'viewed' %></td>
+              <% end %>
+            </tr>
+          <% end %>
+          </tbody>
         <% end %>
-      <% end %>
-      </tbody>
-    </table>
-  </div>
+      </table>
+    </div>
+<!--  </div>-->
 </div>

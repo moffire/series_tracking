@@ -15,3 +15,6 @@
  //*/
 @import "bootstrap";
 
+tbody.collapse.in {
+    display: table-row-group;
+}
