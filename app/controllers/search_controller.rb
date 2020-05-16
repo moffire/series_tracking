@@ -1,6 +1,8 @@
 class SearchController < ApplicationController
-  def movies
+  def search_movies
     query = params[:q]
-    @movies = MyShows.new(query).movies_list
+    # todo сделать нечувствительным к регистру
+    @movies = Movie.where("ru_title ilike ?", "%#{query}%")
+              .or(Movie.where("en_title ilike ?", "%#{query}%"))
   end
 end

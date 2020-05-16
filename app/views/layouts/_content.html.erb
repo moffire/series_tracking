@@ -1,22 +1,21 @@
 <div class="container">
   <div class="row text-left">
-    <% @top_movies.each_pair do |movie_external_id, movie_info| %>
+    <% @top_movies.each do |movie| %>
       <div class="col-lg-3 col-md-6 mb-4">
         <div class="card h-100">
-          <img class="card-img-top" src="<%= movie_info[:movie_image_link] %>" alt="">
+          <img class="card-img-top" src="<%= movie.image_url %>" alt="">
           <div class="card-body">
-            <h6 class="card-title"><%= movie_info[:movie_ru_title] %></h6>
-            <h7 class="card-subtitle mb-2 text-muted"><%= movie_info[:movie_en_title] %></h7>
+            <h6 class="card-title"><%= movie.ru_title %></h6>
+            <h7 class="card-subtitle mb-2 text-muted"><%= movie.en_title %></h7>
           </div>
           <div class="card-footer text-left">
-            <%= link_to 'Подробнее', movie_info_path(movie_external_id), class: "btn btn-primary" %>
+            <%= link_to 'Подробнее', movie_path(movie.id), class: "btn btn-primary" %>
             <% if user_signed_in? %>
-<!--              это не работает, тк фильмов еще нет в БД, значит нет id-->
-              <%# if current_user.subscriptions.exists?(movie_id: @movie) %>
-                <%#= link_to '-', unsubscribe_path(movie_external_id), class: "btn btn-danger" %>
-              <%# else %>
-                <%= link_to '+', subscribe_path(movie_external_id), class: "btn btn-success" %>
-              <%# end %>
+              <% if current_user.subscriptions.exists?(movie_id: movie.id) %>
+                <%= link_to '-', unsubscribe_path(movie.id), class: "btn btn-danger" %>
+              <% else %>
+                <%= link_to '+', subscribe_path(movie.id), class: "btn btn-success" %>
+              <% end %>
             <% end %>
           </div>
         </div>

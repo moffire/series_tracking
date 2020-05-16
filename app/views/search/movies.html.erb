@@ -5,19 +5,17 @@
       <tr>
         <th scope="col">Название(ru)</th>
         <th scope="col">Название(en)</th>
-        <th scope="col">Смотрящих</th>
         <th scope="col">Сезонов</th>
-        <th scope="col">Год</th>
+        <th scope="col">Дата выхода</th>
       </tr>
       </thead>
       <tbody>
-      <% @movies.each_pair do |movie_id, movie_info| %>
+      <% @movies.each do |movie| %>
         <tr>
-          <td><%= link_to movie_info[:ru_title], movie_info_path(movie_id) %></td>
-          <td><%= link_to movie_info[:en_title], movie_info_path(movie_id) %></td>
-          <td><%= movie_info[:watchers] %></td>
-          <td><%= movie_info[:seasons] %></td>
-          <td><%= movie_info[:year] %></td>
+          <td><%= link_to movie.ru_title, movie_path(movie) %></td>
+          <td><%= link_to movie.en_title, movie_path(movie) %></td>
+          <td><%= movie.seasons.count %></td>
+          <td><%= movie.start_date %></td>
         </tr>
       <% end %>
       </tbody>
