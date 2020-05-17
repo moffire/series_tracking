@@ -2,6 +2,8 @@ class Movie < ApplicationRecord
   validates :image_url, :description, :country, :start_date, :external_id, presence: true
   has_many :seasons, dependent: :destroy
   has_many :episodes, through: :seasons, dependent: :destroy
+  has_many :subscriptions
+  has_many :viewed_episodes, dependent: :destroy
   before_validation :set_date
 
 
@@ -25,6 +27,8 @@ class Movie < ApplicationRecord
 
     movie
   end
+
+  private
 
   def set_date
     self.start_date ||= 'Неизвестно'

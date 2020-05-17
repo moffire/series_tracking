@@ -2,6 +2,7 @@ class Episode < ApplicationRecord
   validates :number, :title, presence: true
   belongs_to :season
   belongs_to :movie
+  has_many :viewed_episodes, dependent: :destroy
 
   def self.from_external_data(movie_id, season_id, episodes_data)
     episodes_data.each do |episode_number, data|

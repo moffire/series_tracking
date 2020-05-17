@@ -1,40 +1,49 @@
 <div class="container">
   <%= render 'layouts/movie_info' %>
-<!--  <div class="episodes">-->
-    <div class="row">
-      <table class="table table-light table-striped table-hover">
-        <% @movie.seasons.each do |season| %>
-          <tbody>
-          <tr class="clickable" data-toggle="collapse" data-target="#group-of-rows-<%= "#{season.number}" %>" aria-expanded="false" aria-controls="group-of-rows-<%= "#{season.number}" %>">
-            <td>Сезон <%= season.number %>
-              <span class="badge badge-primary float-right"><%= season.episodes.count %></span>
-            </td>
-          </tr>
-          </tbody>
-          <tbody id="group-of-rows-<%= "#{season.number}" %>" class="collapse">
-          <tr>
-            <th scope="col">Сезон</th>
-            <th scope="col">Серия</th>
-            <th scope="col">Название</th>
-            <th scope="col">Дата выхода</th>
+  <!--  <div class="episodes">-->
+  <div class="row">
+    <table class="table table-light table-striped table-hover">
+      <% @movie.seasons.each do |season| %>
+        <tbody>
+        <tr class="clickable" data-toggle="collapse" data-target="#group-of-rows-<%= "#{season.number}" %>" aria-expanded="false" aria-controls="group-of-rows-<%= "#{season.number}" %>">
+          <td>Сезон <%= season.number %>
             <% if user_signed_in? %>
-              <th scope="col" class="text-center">Просмотрено</th>
+              <span class="badge badge-primary float-right"><%= current_user.viewed_episodes.where(season_id: season).count %>
+                /<%= season.episodes.count %></span>
+            <% else %>
+              <span class="badge badge-primary float-right"><%= season.episodes.count %></span>
+            <% end %>
+          </td>
+        </tr>
+        </tbody>
+        <tbody id="group-of-rows-<%= "#{season.number}" %>" class="collapse">
+        <tr>
+          <th scope="col">Сезон</th>
+          <th scope="col">Серия</th>
+          <th scope="col">Название</th>
+          <th scope="col">Дата выхода</th>
+          <% if user_signed_in? %>
+            <th scope="col" class="text-center">Просмотрено</th>
+          <% end %>
+        </tr>
+        <% season.episodes.each do |episode| %>
+          <tr>
+            <td><%= season.number %></td>
+            <td><%= episode.number %></td>
+            <td><%= episode.title %></td>
+            <td><%= episode.date %></td>
+            <% if user_signed_in? %>
+              <% if current_user.viewed_episodes.find_by(episode_id: episode.id) %>
+                <td class="text-center viewed_episode"><%= check_box_tag 'status', 'viewed', checked = true %></td>
+              <% else %>
+                <td class="text-center unviewed_episode"><%= check_box_tag 'status', 'unviewed', checked = false %></td>
+              <% end %>
             <% end %>
           </tr>
-          <% season.episodes.each do |episode| %>
-            <tr>
-              <td><%= season.number %></td>
-              <td><%= episode.number %></td>
-              <td><%= episode.title %></td>
-              <td><%= episode.date %></td>
-              <% if user_signed_in? %>
-                <td class="text-center"><%= check_box_tag 'viewed' %></td>
-              <% end %>
-            </tr>
-          <% end %>
-          </tbody>
         <% end %>
-      </table>
-    </div>
-<!--  </div>-->
+        </tbody>
+      <% end %>
+    </table>
+  </div>
+  <!--  </div>-->
 </div>

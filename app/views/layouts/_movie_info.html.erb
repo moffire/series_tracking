@@ -22,10 +22,12 @@
   </div>
   <div class="col-lg-8">
     <p><%= @movie.description %></p>
-    <% if current_user.subscriptions.exists?(movie_id: @movie) %>
-      <%= link_to 'Отписаться', unsubscribe_path(@movie), class: 'btn btn-outline-danger btn-md' %>
-    <% else %>
-      <%= link_to 'Подписаться', subscribe_path(@movie), class: 'btn btn-outline-success btn-md' %>
+    <% if user_signed_in? %>
+      <% if current_user.subscriptions.exists?(movie_id: @movie) %>
+        <%= link_to 'Отписаться', unsubscribe_path(@movie), class: 'btn btn-outline-danger btn-md' %>
+      <% else %>
+        <%= link_to 'Подписаться', subscribe_path(@movie), class: 'btn btn-outline-success btn-md' %>
+      <% end %>
     <% end %>
   </div>
 </div>
