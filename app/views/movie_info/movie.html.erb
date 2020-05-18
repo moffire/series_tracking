@@ -33,11 +33,9 @@
             <td><%= episode.title %></td>
             <td><%= episode.date %></td>
             <% if user_signed_in? %>
-              <% if current_user.viewed_episodes.find_by(episode_id: episode.id) %>
-                <td class="text-center viewed_episode"><%= check_box_tag 'status', 'viewed', checked = true %></td>
-              <% else %>
-                <td class="text-center unviewed_episode"><%= check_box_tag 'status', 'unviewed', checked = false %></td>
-              <% end %>
+              <td class="text-center">
+                <%= check_box_tag 'view_status', episode.id, checked = current_user.viewed_episodes.find_by(episode_id: episode.id) %>
+              </td>
             <% end %>
           </tr>
         <% end %>
