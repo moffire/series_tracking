@@ -11,4 +11,7 @@ Rails.application.routes.draw do
   get 'movie/:id', to: 'movie_info#movie', as: 'movie'
   get 'subscribe/:id', to: 'subscriptions#subscribe', as: 'subscribe'
   get 'unsubscribe/:id', to: 'subscriptions#unsubscribe', as: 'unsubscribe'
+
+  # profile
+  get 'profile/:id', to: 'profile#index', as: 'profile'
 end
