@@ -9,7 +9,8 @@
           <td>Сезон <%= season.number %>
             <% if user_signed_in? %>
               <span class="badge badge-primary float-right"><%= current_user.viewed_episodes.where(season_id: season).count %>
-                /<%= season.episodes.count %></span>
+                /<%= season.episodes.count %>
+              </span>
             <% else %>
               <span class="badge badge-primary float-right"><%= season.episodes.count %></span>
             <% end %>
