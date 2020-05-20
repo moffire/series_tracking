@@ -1,5 +1,4 @@
 class ViewedEpisode < ApplicationRecord
-  belongs_to :episode
   belongs_to :user
   belongs_to :subscription
   validates_uniqueness_of :episode_id, scope: :user_id

@@ -2,64 +2,28 @@
   <form method="post">
     <div class="row">
       <div class="col-md-12">
-        <div class="profile-head">
-          <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
-              <a class="nav-link active" id="active-tab" data-toggle="tab" href="#active" role="tab" aria-controls="active" aria-selected="true">Активные</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="viewed-tab" data-toggle="tab" href="#viewed" role="tab" aria-controls="viewed" aria-selected="false">Просмотрено</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="tab-content profile-tab" id="myTabContent">
-          <div class="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="active-tab">
-            <% @subscriptions.each do |subscription| %>
-              <div class="container">
-                <div class="row">
-                  <div class="col-12">
-                    <table class="table table-image">
-                      <tr>
-                        <td class="w-25">
-                          <%= image_tag subscription.movie.image_url, class: "img-fluid img-thumbnail" %>
-                        </td>
-                        <td>
-                          <%= subscription.movie.ru_title %><br><%= subscription.movie.en_title %></td>
-                        <td>
+        <% @subscriptions.each do |subscription| %>
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <table class="table table-image">
+                  <tr>
+                    <td class="w-25">
+                      <%= image_tag subscription.movie.image_url, class: "img-fluid img-thumbnail" %>
+                    </td>
+                    <td>
+                      <%= subscription.movie.ru_title %><br><%= subscription.movie.en_title %></td>
+                    <td>
                           <span class="badge badge-primary float-right">
                             <%= subscription.viewed_episodes.count %>/<%= subscription.movie.episodes.count %>
                           </span>
-                        </td>
-                      </tr>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            <% end %>
-          </div>
-          <div class="tab-pane fade" id="viewed" role="tabpanel" aria-labelledby="viewed-tab">
-            <div class="row">
-              <div class="col-md-6">
-                <label>Experience</label>
-              </div>
-              <div class="col-md-6">
-                <p>Expert</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Hourly Rate</label>
-              </div>
-              <div class="col-md-6">
-                <p>10$/hr</p>
+                    </td>
+                  </tr>
+                </table>
               </div>
             </div>
           </div>
-        </div>
+        <% end %>
       </div>
     </div>
   </form>
