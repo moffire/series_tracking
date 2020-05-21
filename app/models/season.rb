@@ -7,9 +7,13 @@ class Season < ApplicationRecord
   def self.from_external_data(movie_id, season_number, seasons_data)
     season = Season.find_or_initialize_by(movie_id: movie_id,
                                       number: season_number.to_i)
-    return nil unless season.save
+    if season.new_record?
+      return nil unless season.save
+    end
 
-    Episode.from_external_data(movie_id, season.id, seasons_data[season_number])
+    unless season.episodes.count == seasons_data[season_number].count
+      Episode.from_external_data(movie_id, season.id, seasons_data[season_number])
+    end
   end
 
 end

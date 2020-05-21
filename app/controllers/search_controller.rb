@@ -4,5 +4,6 @@ class SearchController < ApplicationController
     # todo сделать нечувствительным к регистру
     @movies = Movie.where("ru_title ilike ?", "%#{query}%")
               .or(Movie.where("en_title ilike ?", "%#{query}%"))
+    render 'search/movies'
   end
 end

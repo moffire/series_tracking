@@ -6,11 +6,13 @@ class Episode < ApplicationRecord
   def self.from_external_data(movie_id, season_id, episodes_data)
     episodes_data.each do |episode_number, data|
       episode = Episode.find_or_initialize_by(movie_id: movie_id,
-                                          season_id: season_id,
-                                          number: episode_number,
-                                          title: data[:episode_title],
-                                          date: data[:episode_date])
-      return nil unless episode.save
+                                              season_id: season_id,
+                                              number: episode_number,
+                                              title: data[:episode_title],
+                                              date: data[:episode_date])
+      if episode.new_record?
+        return nil unless episode.save
+      end
     end
   end
 end

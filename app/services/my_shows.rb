@@ -120,5 +120,3 @@ class MyShows
   end
 
 end
-
-puts MyShows.new(52998).movie_info
