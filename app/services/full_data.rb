@@ -1,7 +1,5 @@
 require_relative '../models/movie'
 require_relative 'my_shows'
-require 'nokogiri'
-require 'open-uri'
 
 class FullData
 
@@ -11,8 +9,8 @@ class FullData
   HTML = Nokogiri::HTML(URI.open(URL))
   @@max_pages = HTML.css('.pagination > .pagination__item')[-2].css('a').text.to_i
 
-  def self.parse_all_movies_data(last_page = @@max_pages)
-    (0..last_page).each do |page_number|
+  def self.parse_all_movies_data
+    (0..@@max_pages).each do |page_number|
       page = URL + '?page=' + page_number.to_s
       data = Nokogiri::HTML(URI.open(page))
       all_movies = data.css('.table__body > .table__row')

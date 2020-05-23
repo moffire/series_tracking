@@ -29,9 +29,20 @@ class Movie < ApplicationRecord
     movie
   end
 
+  def self.update_subscriptions_movies
+    movies_for_update = []
+    Subscription.all.each do |subscription|
+      movies_for_update << subscription.movie.external_id
+    end
+    movies_for_update.uniq.each do |movie|
+      Movie.from_external_data(MyShows.new(movie).movie_info)
+    end
+  end
+
   private
 
   def set_date
     self.start_date ||= 'Неизвестно'
   end
+
 end
