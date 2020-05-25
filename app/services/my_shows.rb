@@ -1,3 +1,4 @@
+require 'nokogiri'
 require 'open-uri'
 require 'cgi/util'
 
@@ -60,7 +61,7 @@ class MyShows
     html = parse_html("/view/#{@query}/")
     movie_full_info = {
       external_id: html.css('.metaList > .last > a')[0]['href'][/\d+/],
-      movie_ru_title: html.css('.container > .row > .col8 > h1').text,
+      movie_ru_title: html.css('.container > .row > .col8 > h1').text.rstrip!,
       movie_en_title: html.css('.container > .row > .col8 > .subHeader').text,
       movie_image: html.css('.presentBlock > .presentBlockImg').to_s[/(?<=\().+?(?=\))/],
       description: html.css('main > .row > .col5 > p').text.gsub(' ', ''),
@@ -119,3 +120,5 @@ class MyShows
   end
 
 end
+
+puts MyShows.new(7718).movie_info

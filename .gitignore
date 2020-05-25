@@ -30,3 +30,4 @@
 .DS_Store
 .idea
 /db/migrate/*
+dump.rdb
