@@ -35,7 +35,10 @@
             <td><%= episode.date %></td>
             <% if user_signed_in? %>
               <td class="text-center">
-                <%= check_box_tag 'view_status', episode.id, checked = current_user.viewed_episodes.find_by(episode_id: episode.id) %>
+                <%= check_box_tag "view_status_#{episode.id}", episode.id,
+                                  checked = @viewed_episodes.include?(episode.id),
+                                  remote: true
+                %>
               </td>
             <% end %>
           </tr>
