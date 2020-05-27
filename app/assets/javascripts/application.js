@@ -17,12 +17,30 @@
 //= require jquery3
 //= require popper
 //= require bootstrap
-
-$(function() {
-    setTimeout(function() {
+$(function () {
+    setTimeout(function () {
         $('.alert').fadeOut('fast');
     }, 2000);
-    setTimeout(function() {
+    setTimeout(function () {
         $('.notice').fadeOut('slow');
     }, 5000);
 });
+
+let pageLoadedFunction = function () {
+    $(".checkbox-view-status").change(updateEpisodeStatus)
+};
+
+$(document).ready(pageLoadedFunction);
+
+function updateEpisodeStatus(e) {
+    let id = $(e.target).attr('value');
+    let auth_token = $('[name="csrf-token"]').attr('content');
+
+    $.ajax({
+        type: "PUT",
+        url: `update_status/${id}`,
+        data: {
+            authenticity_token: auth_token
+        },
+    });
+}

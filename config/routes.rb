@@ -12,6 +12,9 @@ Rails.application.routes.draw do
   get 'subscribe/:id', to: 'subscriptions#subscribe', as: 'subscribe'
   get 'unsubscribe/:id', to: 'subscriptions#unsubscribe', as: 'unsubscribe'
 
+  # update episode status (viewed/unviewed)
+  put 'movie/update_status/:id', to: 'movie_info#change_view_status', as: 'update_status'
+
   # profile
   get 'profile/:id', to: 'profile#index', as: 'profile'
 end

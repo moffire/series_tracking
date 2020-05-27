@@ -3,12 +3,12 @@
   <!--  <div class="episodes">-->
   <div class="row">
     <table class="table table-light table-striped table-hover">
-      <% @movie.seasons.each do |season| %>
+      <% @seasons.each do |season| %>
         <tbody>
         <tr class="clickable" data-toggle="collapse" data-target="#group-of-rows-<%= "#{season.number}" %>" aria-expanded="false" aria-controls="group-of-rows-<%= "#{season.number}" %>">
           <td>Сезон <%= season.number %>
             <% if user_signed_in? %>
-              <span class="badge badge-primary float-right"><%= current_user.viewed_episodes.where(season_id: season).count %>
+              <span class="badge badge-primary float-right"><%= current_user.viewed_episodes.where(season_id: season, viewed: true).count %>
                 /<%= season.episodes.count %>
               </span>
             <% else %>
@@ -37,8 +37,8 @@
               <td class="text-center">
                 <%= check_box_tag "view_status_#{episode.id}", episode.id,
                                   checked = @viewed_episodes.include?(episode.id),
-                                  remote: true
-                %>
+                                  class: 'checkbox-view-status',
+                                  remote: true %>
               </td>
             <% end %>
           </tr>
