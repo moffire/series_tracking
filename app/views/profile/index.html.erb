@@ -12,7 +12,10 @@
                       <%= image_tag subscription.movie.image_url, class: "img-fluid img-thumbnail" %>
                     </td>
                     <td>
-                      <%= subscription.movie.ru_title %><br><%= subscription.movie.en_title %></td>
+                      <%= link_to subscription.movie.ru_title, movie_path(subscription.movie.id) %>
+                      <br>
+                      <%= link_to subscription.movie.en_title, movie_path(subscription.movie.id) %>
+                    </td>
                     <td>
                           <span class="badge badge-primary float-right">
                             <%= subscription.viewed_episodes.count %>/<%= subscription.movie.episodes.count %>
