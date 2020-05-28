@@ -7,7 +7,9 @@ class MovieInfoController < ApplicationController
     @movie = Movie.find_by_id(params[:id])
     redirect_to(root_path, notice: 'Фильм не найден') unless @movie
     @seasons = @movie.seasons
-    @viewed_episodes = current_user.viewed_episodes.where(movie_id: @movie.id, viewed: true).pluck(:episode_id)
+    if user_signed_in?
+      @viewed_episodes = current_user.viewed_episodes.where(movie_id: @movie.id, viewed: true).pluck(:episode_id)
+    end
   end
 
   def change_view_status
