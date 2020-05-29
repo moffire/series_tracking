@@ -1,5 +1,6 @@
 class Movie < ApplicationRecord
-  validates :image_url, :description, :country, :start_date, :external_id, presence: true
+  validates :country, :start_date, :external_id, presence: true
+  validate :ru_title_or_en_title
   has_many :seasons, dependent: :destroy
   has_many :episodes, through: :seasons, dependent: :destroy
   has_many :subscriptions
@@ -37,6 +38,10 @@ class Movie < ApplicationRecord
     movies_for_update.uniq.each do |movie|
       Movie.from_external_data(MyShows.new(movie).movie_info)
     end
+  end
+
+  def ru_title_or_en_title
+    errors.add(:title, "either one of ru_title or en_title must be presence") unless ru_title.present? || en_title.present?
   end
 
   private
