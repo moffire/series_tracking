@@ -26,5 +26,25 @@ RSpec.describe Movie, type: :model do
       movie.valid?
       expect(movie.errors.messages[:title]).to include('either one of ru_title or en_title must be presence')
     end
+    it 'default value of image link should presence' do
+      movie = Movie.new
+      movie.valid?
+      expect(movie.image_url).to eq('https://dummyimage.com/600x400/f5f5f5/000000&text=No+image+=(')
+    end
+    it 'should setup external image link' do
+      movie = Movie.new(image_url: 'external link')
+      movie.valid?
+      expect(movie.image_url).to eq('external link')
+    end
+    it 'default value of description should presence' do
+      movie = Movie.new
+      movie.valid?
+      expect(movie.description).to eq('Описание недоступно')
+    end
+    it 'should setup external description' do
+      movie = Movie.new(description: 'lorem ipsum')
+      movie.valid?
+      expect(movie.description).to eq('lorem ipsum')
+    end
   end
 end
