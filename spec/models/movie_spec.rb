@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Movie, type: :model do
-  context 'validation test' do
+  context 'validation tests' do
     it { should validate_presence_of(:country) }
     it { should_not validate_presence_of(:start_date) }
     it 'default value of start date should presence' do
@@ -46,5 +46,12 @@ RSpec.describe Movie, type: :model do
       movie.valid?
       expect(movie.description).to eq('lorem ipsum')
     end
+  end
+  
+  context 'relation tests' do
+    it { should have_many(:seasons) }
+    it { should have_many(:episodes).through(:seasons) }
+    it { should have_many(:subscriptions) }
+    it { should have_many(:viewed_episodes) }
   end
 end
