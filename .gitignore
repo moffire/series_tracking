@@ -31,3 +31,5 @@
 .idea
 /db/migrate/*
 dump.rdb
+/.rubocop.yml
+!/dump.rdb
