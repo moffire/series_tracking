@@ -19,18 +19,15 @@ Rails.application.routes.draw do
   get 'profile/:id', to: 'profile#index', as: 'profile'
 
   # api
-  
-  resources :users do
-    member do
-      get 'api_token', to: 'users#api_token'
-    end
-  end
-  
   namespace :api do
     namespace :v1 do
       resources :movie_info, only: [:create, :update, :destroy]
       get 'top_imdb', to: 'movie_info#top_rated_imdb'
       get 'top_kp', to: 'movie_info#top_rated_kp'
+      get 'movie/:id', to: 'movie_info#movie'
+      get 'season/:id/:season_id', to: 'movie_info#season'
+      get 'episodes/:id', to: 'movie_info#all_movie_episodes'
+      get 'episode/:id', to: 'movie_info#episode'
     end
   end
 end
