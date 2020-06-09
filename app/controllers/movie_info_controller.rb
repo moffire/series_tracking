@@ -1,10 +1,10 @@
 class MovieInfoController < ApplicationController
 
   before_action :set_episode, only: :change_view_status
-  before_action :authenticate_user!, only: :change_view_status
+  before_action :authenticate_user!, only: [:change_view_status]
+  before_action :set_movie, only: [:movie]
 
   def movie
-    @movie = Movie.find_by_id(params[:id])
     redirect_to(root_path, notice: 'Фильм не найден') unless @movie
     @seasons = @movie.seasons
     if user_signed_in?
@@ -34,6 +34,10 @@ class MovieInfoController < ApplicationController
 
   private
 
+  def set_movie
+    @movie = Movie.find_by_id(params[:id])
+  end
+  
   def set_episode
     @episode = Episode.find_by_id(params[:id])
   end
