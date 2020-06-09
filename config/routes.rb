@@ -21,7 +21,6 @@ Rails.application.routes.draw do
   # api
   namespace :api do
     namespace :v1 do
-      resources :movie_info, only: [:create, :update, :destroy]
       get 'top_imdb', to: 'movie_info#top_rated_imdb'
       get 'top_kp', to: 'movie_info#top_rated_kp'
       get 'movie/:id', to: 'movie_info#movie'
