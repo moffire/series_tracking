@@ -65,6 +65,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'activerecord-import'
 gem 'bootstrap', '~> 4.4.1'
 gem 'devise'
+gem 'hiredis'
+gem 'redis-namespace'
 gem 'jquery-rails'
 gem 'rabl'
 gem 'redis'
