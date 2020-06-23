@@ -1,24 +1,27 @@
-# README
+# MySeries
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Каталог сериалов с возможностью отслеживания выхода новых серий
 
-Things you may want to cover:
+### Setup
 
-* Ruby version
+* git@github.com:moffire/my_series.git
+* bundle install
+* rails db:setup
+* rails db:migrate
+* rails s
 
-* System dependencies
+## Built With
 
-* Configuration
+* Rails 5.2.4
+* PostgreSQL
+* Redis
+* Sidekiq
+* RSpec
+* Factory Bot
+* Rabl
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## API
+* api :GET, localhost:3000/api/v1/movie/:id
+* api :GET, localhost:3000/api/v1/episodes/:id
+* api :GET, localhost:3000/api/v1/top_imdb
+* etc.
